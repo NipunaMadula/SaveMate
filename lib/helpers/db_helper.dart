@@ -38,4 +38,10 @@ class DBHelper {
 
     return _db!;
   }
+
+    static Future<void> insertExpense(Expense expense) async {
+    final db = await getDatabase();
+    await db.insert('expenses', expense.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+  
 }
