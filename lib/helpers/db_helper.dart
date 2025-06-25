@@ -50,4 +50,19 @@ class DBHelper {
     return data.map((e) => Expense.fromMap(e)).toList();
   }
 
+    static Future<void> upsertBudget(Budget budget) async {
+    final db = await getDatabase();
+    final existing = await db.query(
+      'budgets',
+      where: 'category = ?',
+      whereArgs: [budget.category],
+    );
+
+    if (existing.isNotEmpty) {
+      await db.update('budgets', budget.toMap(), where: 'category = ?', whereArgs: [budget.category]);
+    } else {
+      await db.insert('budgets', budget.toMap());
+    }
+  }
+
 }
