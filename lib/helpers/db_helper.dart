@@ -43,5 +43,11 @@ class DBHelper {
     final db = await getDatabase();
     await db.insert('expenses', expense.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
-  
+
+    static Future<List<Expense>> fetchExpenses() async {
+    final db = await getDatabase();
+    final data = await db.query('expenses');
+    return data.map((e) => Expense.fromMap(e)).toList();
+  }
+
 }
