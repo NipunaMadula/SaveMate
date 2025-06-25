@@ -65,4 +65,10 @@ class DBHelper {
     }
   }
 
+    static Future<List<Budget>> fetchBudgets() async {
+    final db = await getDatabase();
+    final data = await db.query('budgets');
+    return data.map((b) => Budget.fromMap(b)).toList();
+  }
+
 }
