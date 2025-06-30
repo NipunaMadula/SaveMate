@@ -6,6 +6,7 @@ class Category {
     required this.name,
     required this.icon,
   });
+}
 
   final List<Category> predefinedCategories = [
     Category(name: 'Food', icon: '🍔'),
@@ -16,5 +17,3 @@ class Category {
     Category(name: 'Shopping', icon: '🛍️'),
     Category(name: 'Others', icon: '📦'),
   ];
-  
-}
