@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/expense_provider.dart';
+import 'screens/home_screen.dart';
 
 void main() {
   runApp(SaveMateApp());
@@ -19,17 +20,7 @@ class SaveMateApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text('SaveMate'),
-          ),
-          body: Center(
-            child: Text(
-              'Welcome to SaveMate!',
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-        ),
+        home: HomeScreen(),
       ),
     );
   }
