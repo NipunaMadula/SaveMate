@@ -38,14 +38,37 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: expenses.length,
                   itemBuilder: (ctx, index) {
                     final expense = expenses[index];
-                    return ListTile(
-                      leading: Text(
-                        expense.category,
-                        style: TextStyle(fontSize: 24),
+                    return Dismissible(
+                      key: ValueKey(expense.id),
+                      background: Container(
+                        color: Colors.red,
+                        alignment: Alignment.centerRight,
+                        padding: EdgeInsets.only(right: 20),
+                        child: Icon(Icons.delete, color: Colors.white),
                       ),
-                      title: Text(expense.title),
-                      subtitle: Text(
-                        '${expense.amount.toStringAsFixed(2)} LKR | ${expense.date.toLocal().toString().split(' ')[0]}',
+                      direction: DismissDirection.endToStart,
+                      confirmDismiss: (direction) async {
+                        return await showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: Text('Confirm Delete'),
+                            content: Text('Are you sure you want to delete this expense?'),
+                            actions: [
+                              TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text('Cancel')),
+                              TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text('Delete')),
+                            ],
+                          ),
+                        );
+                      },
+                      onDismissed: (direction) {
+                        Provider.of<ExpenseProvider>(context, listen: false).deleteExpense(expense.id!);
+                      },
+                      child: ListTile(
+                        leading: Text(expense.category, style: TextStyle(fontSize: 24)),
+                        title: Text(expense.title),
+                        subtitle: Text(
+                          '${expense.amount.toStringAsFixed(2)} LKR | ${expense.date.toLocal().toString().split(' ')[0]}',
+                        ),
                       ),
                     );
                   },

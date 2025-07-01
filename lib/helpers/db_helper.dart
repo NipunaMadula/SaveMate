@@ -50,6 +50,15 @@ class DBHelper {
     return data.map((e) => Expense.fromMap(e)).toList();
   }
 
+    static Future<void> deleteExpense(int id) async {
+    final db = await DBHelper.getDatabase();
+    await db.delete(
+      'expenses',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
     static Future<void> upsertBudget(Budget budget) async {
     final db = await getDatabase();
     final existing = await db.query(
