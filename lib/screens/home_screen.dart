@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/expense_provider.dart';
 import 'add_expense_screen.dart';
+import '../screens/budget_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -29,6 +30,17 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('SaveMate'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.pie_chart),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (ctx) => BudgetScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
