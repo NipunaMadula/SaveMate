@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/expense_provider.dart';
 import 'add_expense_screen.dart';
 import '../screens/budget_screen.dart';
+import 'edit_expense_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -80,6 +81,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: Text(expense.title),
                         subtitle: Text(
                           '${expense.amount.toStringAsFixed(2)} LKR | ${expense.date.toLocal().toString().split(' ')[0]}',
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => EditExpenseScreen(expense: expense),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     );
