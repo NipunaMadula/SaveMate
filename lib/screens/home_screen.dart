@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:savemate/screens/summary_screen.dart';
 import '../providers/expense_provider.dart';
 import 'add_expense_screen.dart';
 import '../screens/budget_screen.dart';
@@ -33,7 +34,16 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text('SaveMate'),
         actions: [
           IconButton(
-            icon: Icon(Icons.pie_chart),
+            icon: Icon(Icons.pie_chart), 
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (ctx) => SummaryScreen()),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.account_balance_wallet), 
             onPressed: () {
               Navigator.push(
                 context,
