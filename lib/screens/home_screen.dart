@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:savemate/helpers/export_helper.dart';
 import 'package:savemate/screens/summary_screen.dart';
 import '../providers/expense_provider.dart';
 import 'add_expense_screen.dart';
 import '../screens/budget_screen.dart';
 import 'edit_expense_screen.dart';
+import 'package:printing/printing.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -50,6 +52,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 MaterialPageRoute(builder: (ctx) => BudgetScreen()),
               );
             },
+          ),
+          PopupMenuButton<String>(
+            onSelected: (value) async {
+              final expenses = Provider.of<ExpenseProvider>(context, listen: false).expenses;
+
+              if (value == 'csv') {
+                final path = await ExportHelper.exportToCSV(expenses);
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('CSV saved to $path')));
+              } else if (value == 'pdf') {
+                final file = await ExportHelper.exportToPDF(expenses);
+                await Printing.layoutPdf(onLayout: (_) => file.readAsBytesSync());
+              }
+            },
+            itemBuilder: (ctx) => [
+              PopupMenuItem(value: 'csv', child: Text('Export to CSV')),
+              PopupMenuItem(value: 'pdf', child: Text('Export to PDF')),
+            ],
           ),
         ],
       ),
